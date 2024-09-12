@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tor-Enabled Data Download</title>
+</head>
+<body>
+    <h1>Tor-Enabled Data Download</h1>
+    <form action="{% url 'authenticate' %}" method="get">
+        <label for="password">Enter password:</label>
+        <input type="password" id="password" name="password">
+        <button type="submit">Submit</button>
+    </form>
+    <div id="data"></div>
+
+    <script>
+        fetch('{% url "data" %}', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('data').innerHTML = JSON.stringify(data, null, 2);
+        })
+        .catch(error => console.error(error));
+    </script>
+</body>
+</html>
